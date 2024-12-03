@@ -14,10 +14,13 @@ struct ContentView: View {
                 .tabItem {
                     Label("Noticias", systemImage: "newspaper")
                 }
+                .tag(0)
+                
             ListaUsuariosView()
                 .tabItem {
                     Label("Usuarios", systemImage: "person.3")
                 }
+                .tag(1)
         }
     }
 }

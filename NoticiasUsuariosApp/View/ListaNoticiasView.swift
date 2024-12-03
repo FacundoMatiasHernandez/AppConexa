@@ -26,6 +26,7 @@ struct ListaNoticiasView: View {
                             Spacer()
                         }
                     )
+                    .accessibilityIdentifier("BuscarNoticias")
                     .padding(.horizontal)
 
                 List(viewModel.noticiasFiltradas) { noticia in

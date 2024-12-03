@@ -15,7 +15,7 @@ struct ListaUsuariosView: View {
             VStack {
 
                 TextField("Buscar usuarios", text: $viewModel.searchText)
-                    .padding(.leading, 30) 
+                    .padding(.leading, 30)
                     .padding(10)
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
@@ -27,6 +27,7 @@ struct ListaUsuariosView: View {
                             Spacer()
                         }
                     )
+                    .accessibilityIdentifier("BuscarUsuarios")
                     .padding(.horizontal)
 
 
@@ -41,7 +42,7 @@ struct ListaUsuariosView: View {
                                 ZStack {
                                     Circle()
                                         .fill(LinearGradient(
-                                            gradient: Gradient(colors: [Color.blue, Color.purple]),
+                                            gradient: Gradient(colors: [Color.blue, Color.black]),
                                             startPoint: .topLeading,
                                             endPoint: .bottomTrailing
                                         ))
