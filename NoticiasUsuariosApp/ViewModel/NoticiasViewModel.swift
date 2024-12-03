@@ -9,6 +9,8 @@ import Foundation
 
 class NoticiasViewModel: ObservableObject {
     @Published var noticias: [Noticia] = []
+    @Published var searchText: String = ""
+
     private let repository = Repository()
 
     func cargarNoticias() {
@@ -18,5 +20,12 @@ class NoticiasViewModel: ObservableObject {
             }
         }
     }
-}
 
+    var noticiasFiltradas: [Noticia] {
+        if searchText.isEmpty {
+            return noticias
+        } else {
+            return noticias.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+        }
+    }
+}

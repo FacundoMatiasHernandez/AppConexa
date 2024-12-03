@@ -9,38 +9,43 @@ import SwiftUI
 
 struct ListaNoticiasView: View {
     @StateObject var viewModel = NoticiasViewModel()
-    @State private var searchText = ""
 
     var body: some View {
         NavigationView {
             VStack {
-                HStack {
-                    Image(systemName: "magnifyingglass")
-                    TextField("Buscar noticias", text: $searchText)
-                        .padding(.leading, 8)
-                    if !searchText.isEmpty {
-                        Button(action: { searchText = "" }) {
-                            Image(systemName: "xmark.circle.fill")
+                TextField("Buscar noticias", text: $viewModel.searchText)
+                    .padding(.leading, 30)
+                    .padding(10)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(8)
+                    .overlay(
+                        HStack {
+                            Image(systemName: "magnifyingglass")
                                 .foregroundColor(.gray)
+                                .padding(.leading, 10)
+                            Spacer()
+                        }
+                    )
+                    .padding(.horizontal)
+
+                List(viewModel.noticiasFiltradas) { noticia in
+                    NavigationLink(destination: DetalleNoticiaView(noticia: noticia)) {
+                        VStack(alignment: .leading) {
+                            Text(noticia.title).font(.headline)
+                            AsyncImage(url: URL(string: noticia.image)) { image in
+                                image.resizable().scaledToFit()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(height: 150)
                         }
                     }
                 }
-                .padding(10)
-                .background(Color(.systemGray6))
-                .cornerRadius(8)
-                .padding([.horizontal, .top])
-
-                List(viewModel.noticias.filter {
-                    searchText.isEmpty || $0.title.localizedCaseInsensitiveContains(searchText)
-                }) { noticia in
-                    NavigationLink(destination: DetalleNoticiaView(noticia: noticia)) {
-                        Text(noticia.title)
-                    }
-                }
-            }
+            }            
             .navigationTitle("Noticias")
-            .onAppear { viewModel.cargarNoticias() }
+            .onAppear {
+                viewModel.cargarNoticias()
+            }
         }
     }
 }
-
